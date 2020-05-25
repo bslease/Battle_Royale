@@ -25,7 +25,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("We've connected to the master server.");
+        // seems this is now required in order to receive OnRoomListUpdate callbacks:
+        PhotonNetwork.JoinLobby();
     }
 
     // attempts to create a room

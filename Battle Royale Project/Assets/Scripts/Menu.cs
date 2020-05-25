@@ -203,6 +203,7 @@ public class Menu : MonoBehaviourPunCallbacks, ILobbyCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> allRooms)
     {
+        Debug.Log("OnRoomListUpdate called from Photon");
         roomList = allRooms;
     }
 }
