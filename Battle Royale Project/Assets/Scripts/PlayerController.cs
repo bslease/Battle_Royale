@@ -129,5 +129,37 @@ public class PlayerController : MonoBehaviourPun
     [PunRPC]
     void Die()
     {
+        // Q: How does it know which player this is being called about?
+        // A: In TakeDamage, the PlayerController that is dying tells all clients to run the Die function.
+        //      Photon Network then runs the die function on the playercontroller that sent it.
+        curHp = 0;
+        dead = true;
+
+        GameManager.instance.alivePlayers--;
+
+        // host will check win condition
+        // CheckWinCondition doesn't just check, but also ends the game, so flow would stop there
+        if (PhotonNetwork.IsMasterClient)
+            GameManager.instance.CheckWinCondition();
+
+        if (photonView.IsMine)
+        {
+            // check if I'm dying to a player or the force field
+            if (curAttackerId != 0)
+                GameManager.instance.GetPlayer(curAttackerId).photonView.RPC("AddKill", RpcTarget.All);
+
+            // set the cam to spectator mode
+            GetComponentInChildren<CameraController>().SetAsSpectator();
+
+            // disable physics and hide the player avatar
+            rig.isKinematic = true;
+            transform.position = new Vector3(0, -50, 0);
+        }
+    }
+
+    [PunRPC]
+    public void AddKill()
+    {
+        kills++;
     }
 }
