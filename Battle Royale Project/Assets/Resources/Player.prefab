@@ -272,8 +272,8 @@ MonoBehaviour:
   jumpForce: 7.5
   rig: {fileID: 1750795680579905485}
   id: 0
-  curHp: 50
-  maxHp: 50
+  curHp: 100
+  maxHp: 100
   kills: 0
   dead: 0
   mr: {fileID: 1750795680579905483}
@@ -327,11 +327,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201c83f73fa117f418e097b02e58fe74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 10
   curAmmo: 25
   maxAmmo: 25
-  bulletSpeed: 20
-  shootRate: 0.5
+  bulletSpeed: 30
+  shootRate: 0.25
   bulletPrefab: {fileID: 2843610773147650076, guid: d4245047828a7144abf99c5aaa8c0aef,
     type: 3}
   bulletSpawnPos: {fileID: 1750795680179421449}

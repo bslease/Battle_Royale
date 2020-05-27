@@ -13,8 +13,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        //instance = this;
+        //DontDestroyOnLoad(gameObject);
+
+        // Make this a proper singleton to avoid errors on returning to menu after game finish
+        // if an instance already exists and it's not this one - destroy us
+        if (instance != null && instance != this)
+            gameObject.SetActive(false);
+        else
+        {
+            // set the instance
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
     }
 
     private void Start()
@@ -48,5 +60,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void ChangeScene(string sceneName)
     {
         PhotonNetwork.LoadLevel(sceneName);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        PhotonNetwork.LoadLevel("Menu");
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        GameManager.instance.alivePlayers--;
+        GameUI.instance.UpdatePlayerInfoText();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameManager.instance.CheckWinCondition();
+        }
     }
 }

@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviourPun
             // turn off other players' physics in my game (let Photon tell us what's happening to them)
             rig.isKinematic = true;
         }
+        else
+        {
+            GameUI.instance.Initialize(this);
+        }
     }
 
     void Update()
@@ -99,6 +103,7 @@ public class PlayerController : MonoBehaviourPun
         photonView.RPC("DamageFlash", RpcTarget.Others);
 
         // update the health bar UI
+        GameUI.instance.UpdateHealthBar();
 
         // die if no health left
         if (curHp <= 0)
@@ -136,6 +141,7 @@ public class PlayerController : MonoBehaviourPun
         dead = true;
 
         GameManager.instance.alivePlayers--;
+        GameUI.instance.UpdatePlayerInfoText();
 
         // host will check win condition
         // CheckWinCondition doesn't just check, but also ends the game, so flow would stop there
@@ -161,6 +167,7 @@ public class PlayerController : MonoBehaviourPun
     public void AddKill()
     {
         kills++;
+        GameUI.instance.UpdatePlayerInfoText();
     }
 
     [PunRPC]
@@ -169,6 +176,7 @@ public class PlayerController : MonoBehaviourPun
         curHp = Mathf.Clamp(curHp + amountToHeal, 0, maxHp);
 
         // update the health bar UI
+        GameUI.instance.UpdateHealthBar();
     }
 
 }
