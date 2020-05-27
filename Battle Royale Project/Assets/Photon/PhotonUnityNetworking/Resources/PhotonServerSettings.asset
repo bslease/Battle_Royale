@@ -44,6 +44,8 @@ MonoBehaviour:
   - SpawnBullet
   - WinGame
   - AddKill
+  - GiveAmmo
+  - Heal
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
