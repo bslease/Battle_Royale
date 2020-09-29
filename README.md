@@ -1,3 +1,3 @@
 # Battle_Royale
  
-[Play Battle Royale](liamperrin.com/dev/br)
+[Play Battle Royale](http://liamperrin.com/dev/br)
